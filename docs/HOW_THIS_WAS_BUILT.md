@@ -5,8 +5,13 @@
 > A short, honest write-up of what Gauge is, why it exists, and how I worked with
 > AI to build it without losing ownership of the parts that matter.
 
-**Live demo:** _<!-- TODO: paste the Render URL here once deployed -->_ ·
+**Live demo:** [israelortizcpsc.github.io/Gauge-CAPEX-Benchmarking-Dashboard](https://israelortizcpsc.github.io/Gauge-CAPEX-Benchmarking-Dashboard/) ·
 **Code:** [github.com/israelortizcpsc/Gauge-CAPEX-Benchmarking-Dashboard](https://github.com/israelortizcpsc/Gauge-CAPEX-Benchmarking-Dashboard)
+
+> The live demo is hosted on GitHub Pages, which only serves static files — so it
+> runs the React app against a frozen JSON snapshot exported from the real Django
+> API (`manage.py export_static`). The math is still the server's; clone the repo
+> to run the live backend with every filter and the browsable API.
 
 ---
 

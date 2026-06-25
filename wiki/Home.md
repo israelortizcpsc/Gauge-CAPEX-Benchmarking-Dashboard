@@ -15,9 +15,9 @@ a portfolio roll-up. **React/TypeScript + Django/DRF, on synthetic data.**
 
 ## Quick links
 
+- **Live demo:** [israelortizcpsc.github.io/Gauge-CAPEX-Benchmarking-Dashboard](https://israelortizcpsc.github.io/Gauge-CAPEX-Benchmarking-Dashboard/) _(GitHub Pages — runs against a frozen snapshot of the Django API)_
 - **Code:** [main repository](https://github.com/israelortizcpsc/Gauge-CAPEX-Benchmarking-Dashboard)
 - **Full README:** [capbench-README.md](https://github.com/israelortizcpsc/Gauge-CAPEX-Benchmarking-Dashboard/blob/main/capbench-README.md)
-- **Live demo:** _<!-- paste Render URL when deployed -->_
 
 ## In one screen
 

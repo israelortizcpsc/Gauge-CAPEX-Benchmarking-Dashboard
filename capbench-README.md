@@ -16,6 +16,16 @@ a portfolio roll-up. Built on synthetic data, in React/TypeScript + Django/DRF.
   <em>React 19 · TypeScript · Vite · Django 4.2 · Django REST Framework · 37 tests</em>
 </p>
 
+<p align="center">
+  <strong><a href="https://israelortizcpsc.github.io/Gauge-CAPEX-Benchmarking-Dashboard/">▶ Live demo</a></strong>
+</p>
+
+> The live demo (GitHub Pages) runs the React app against a **frozen snapshot of
+> the real Django API** — Pages can't host a backend, so the snapshot is exported
+> from the actual endpoints (see `manage.py export_static`). The numbers are the
+> genuine server-computed ones; only sector/project-type filters are wired in the
+> hosted demo. Run locally (below) for the full live API and all filters.
+
 ---
 
 > ⚠️ **All data is synthetic.** Gauge ships with ~2,000 procedurally generated

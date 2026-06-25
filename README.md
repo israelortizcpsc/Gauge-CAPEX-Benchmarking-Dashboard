@@ -14,6 +14,16 @@ a portfolio roll-up. <strong>React/TypeScript + Django/DRF, on synthetic data.</
   <em>React 19 · TypeScript · Vite · Django 4.2 · Django REST Framework · 37 tests</em>
 </p>
 
+<p align="center">
+  <a href="https://israelortizcpsc.github.io/Gauge-CAPEX-Benchmarking-Dashboard/"><strong>▶ Live demo</strong></a>
+  &nbsp;·&nbsp;
+  <a href="capbench-README.md">Full docs</a>
+  &nbsp;·&nbsp;
+  <a href="docs/HOW_THIS_WAS_BUILT.md">How it was built</a>
+</p>
+
+<p align="center"><sub>The live demo runs the React app against a frozen snapshot of the Django API (GitHub Pages can't host the backend). Clone to run the full live API.</sub></p>
+
 ![Filtering the peer group](docs/screenshots/filter.gif)
 
 <table>

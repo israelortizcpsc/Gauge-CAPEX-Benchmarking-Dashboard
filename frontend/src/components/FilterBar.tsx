@@ -4,6 +4,9 @@ interface Props {
   meta: Meta
   filters: Filters
   onChange: (filters: Filters) => void
+  // Which filter dimensions to show. The static demo only ships snapshots for
+  // sector × project type, so it passes a reduced set.
+  keys?: (keyof Filters)[]
 }
 
 const FIELDS: { key: keyof Filters; label: string; options: (m: Meta) => Option[] }[] = [
@@ -13,12 +16,13 @@ const FIELDS: { key: keyof Filters; label: string; options: (m: Meta) => Option[
   { key: 'size_band', label: 'Size Band', options: (m) => m.size_bands },
 ]
 
-export function FilterBar({ meta, filters, onChange }: Props) {
+export function FilterBar({ meta, filters, onChange, keys }: Props) {
   const hasFilters = Object.values(filters).some(Boolean)
+  const fields = keys ? FIELDS.filter((f) => keys.includes(f.key)) : FIELDS
 
   return (
     <section className="filters" aria-label="Peer group filters">
-      {FIELDS.map((field) => {
+      {fields.map((field) => {
         const id = `filter-${field.key}`
         return (
           <div className="field" key={field.key}>

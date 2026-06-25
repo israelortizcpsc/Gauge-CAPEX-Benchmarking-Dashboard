@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import './App.css'
-import { api, type Filters, type Meta } from './lib/api'
+import { api, STATIC, type Filters, type Meta } from './lib/api'
 import { useAsync } from './hooks/useAsync'
 import { Brand } from './components/Brand'
 import { FilterBar } from './components/FilterBar'
@@ -74,7 +74,20 @@ function Dashboard({ meta }: { meta: Meta }) {
         </p>
       </header>
 
-      <FilterBar meta={meta} filters={filters} onChange={setFilters} />
+      {STATIC && (
+        <div className="demo-banner" role="note">
+          <strong>Live demo</strong> — runs against a frozen snapshot of the Django API
+          (filter by sector &amp; project type). Clone the repo to run the full backend with
+          all filters and the browsable API.
+        </div>
+      )}
+
+      <FilterBar
+        meta={meta}
+        filters={filters}
+        onChange={setFilters}
+        keys={STATIC ? ['sector', 'project_type'] : undefined}
+      />
 
       {portfolio.loading && !portfolio.data ? (
         <Loading label="Loading portfolio…" />

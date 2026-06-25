@@ -5,6 +5,12 @@
 
 const API_BASE = import.meta.env.VITE_API_BASE ?? ''
 
+// In static mode (the GitHub Pages demo) there's no live backend — the app
+// reads a frozen JSON snapshot of the real Django API committed under
+// public/demo-api. `STATIC` flips every endpoint to file reads.
+export const STATIC = import.meta.env.VITE_STATIC === '1'
+const STATIC_BASE = `${import.meta.env.BASE_URL}demo-api`
+
 export class ApiError extends Error {
   status: number
   constructor(status: number, message: string) {
@@ -23,6 +29,22 @@ async function request<T>(path: string, params?: Record<string, string | undefin
   const res = await fetch(url.toString(), { headers: { Accept: 'application/json' } })
   if (!res.ok) {
     throw new ApiError(res.status, `Request to ${path} failed (${res.status})`)
+  }
+  return res.json() as Promise<T>
+}
+
+// Canonical snapshot filename for a peer group — must match the backend's
+// export_static.sig_filename(): dims in fixed order, `dim-value`, joined by `__`.
+function sigFile(filters: Filters): string {
+  const order: (keyof Filters)[] = ['sector', 'region', 'project_type', 'size_band']
+  const parts = order.filter((d) => filters[d]).map((d) => `${d}-${filters[d]}`)
+  return parts.length === 0 ? 'all' : parts.join('__')
+}
+
+async function staticGet<T>(file: string): Promise<T> {
+  const res = await fetch(`${STATIC_BASE}/${file}`, { headers: { Accept: 'application/json' } })
+  if (!res.ok) {
+    throw new ApiError(res.status, `Snapshot ${file} not available in the static demo`)
   }
   return res.json() as Promise<T>
 }
@@ -137,14 +159,26 @@ export type Filters = {
 // --- Endpoints --------------------------------------------------------------
 
 export const api = {
-  meta: () => request<Meta>('/meta/'),
+  meta: () =>
+    STATIC ? staticGet<Meta>('meta.json') : request<Meta>('/meta/'),
 
   projects: (filters: Filters & { search?: string; ordering?: string; page?: string }) =>
-    request<Paginated<ProjectRow>>('/projects/', filters),
+    STATIC
+      ? staticGet<Paginated<ProjectRow>>(`projects/${sigFile(filters)}.json`)
+      : request<Paginated<ProjectRow>>('/projects/', filters),
 
-  benchmark: (filters: Filters) => request<Distribution & { signature: string }>('/benchmarks/', filters),
+  benchmark: (filters: Filters) =>
+    STATIC
+      ? staticGet<Distribution & { signature: string }>(`benchmarks/${sigFile(filters)}.json`)
+      : request<Distribution & { signature: string }>('/benchmarks/', filters),
 
-  portfolio: (filters: Filters) => request<Portfolio>('/portfolio/', filters),
+  portfolio: (filters: Filters) =>
+    STATIC
+      ? staticGet<Portfolio>(`portfolio/${sigFile(filters)}.json`)
+      : request<Portfolio>('/portfolio/', filters),
 
-  projectBenchmark: (id: number) => request<ProjectBenchmark>(`/projects/${id}/benchmark/`),
+  projectBenchmark: (id: number) =>
+    STATIC
+      ? staticGet<ProjectBenchmark>(`project-benchmark/${id}.json`)
+      : request<ProjectBenchmark>(`/projects/${id}/benchmark/`),
 }

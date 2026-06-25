@@ -5,8 +5,11 @@
 > A short, honest write-up of what Gauge is, why it exists, and how I worked with
 > AI to build it without losing ownership of the parts that matter.
 
-**Live demo:** _<!-- paste the Render URL here once deployed -->_ ·
+**Live demo:** [israelortizcpsc.github.io/Gauge-CAPEX-Benchmarking-Dashboard](https://israelortizcpsc.github.io/Gauge-CAPEX-Benchmarking-Dashboard/) ·
 **Code:** [GitHub](https://github.com/israelortizcpsc/Gauge-CAPEX-Benchmarking-Dashboard)
+
+> Hosted on GitHub Pages against a frozen snapshot of the Django API (Pages is
+> static-only). The numbers are the server's; clone to run the live backend.
 
 ---
 

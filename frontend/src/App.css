@@ -49,6 +49,18 @@
   max-width: 280px;
 }
 
+/* ---- Demo banner -------------------------------------------------------- */
+
+.demo-banner {
+  background: var(--accent-soft);
+  border: 1px solid #bfe0dc;
+  color: #14534d;
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+
 /* ---- Filter bar --------------------------------------------------------- */
 
 .filters {
