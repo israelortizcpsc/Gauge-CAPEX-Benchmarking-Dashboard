@@ -14,14 +14,18 @@ a portfolio roll-up. <strong>React/TypeScript + Django/DRF, on synthetic data.</
   <em>React 19 · TypeScript · Vite · Django 4.2 · Django REST Framework · 37 tests</em>
 </p>
 
-![Gauge dashboard](docs/screenshots/dashboard.png)
+![Filtering the peer group](docs/screenshots/filter.gif)
 
-<p align="center">
-  <img src="docs/screenshots/fel.png" width="420" alt="FEL readiness gauge" />
-</p>
+<table>
+  <tr>
+    <td width="62%"><img src="docs/screenshots/project.gif" alt="Benchmarking individual projects" /></td>
+    <td><img src="docs/screenshots/fel.png" alt="FEL readiness gauge" /></td>
+  </tr>
+</table>
 
 > 📖 **Full docs, architecture & API:** [`capbench-README.md`](capbench-README.md)
-> · 🛠️ **Build write-up (the defensible decisions):** [`docs/BUILD_NOTES.md`](docs/BUILD_NOTES.md)
+> · 🛠️ **Engineering decisions:** [`docs/BUILD_NOTES.md`](docs/BUILD_NOTES.md)
+> · ✍️ **How this was built (+ where I drew the line with AI):** [`docs/HOW_THIS_WAS_BUILT.md`](docs/HOW_THIS_WAS_BUILT.md) · [Wiki](../../wiki)
 
 ## What it does
 
