@@ -1,0 +1,39 @@
+# Local full-stack run: Postgres + Django API. The frontend is run separately
+# with `npm run dev` (Vite proxies to the API on :8000).
+#
+#   docker compose up --build
+#
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: gauge
+      POSTGRES_USER: gauge
+      POSTGRES_PASSWORD: gauge
+    ports:
+      - "5432:5432"
+    volumes:
+      - gauge_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gauge"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  api:
+    build: ./backend
+    environment:
+      DJANGO_DEBUG: "False"
+      DJANGO_SECRET_KEY: local-compose-secret
+      DJANGO_ALLOWED_HOSTS: "localhost,127.0.0.1"
+      DJANGO_CORS_ALLOWED_ORIGINS: "http://localhost:5173"
+      DATABASE_URL: postgres://gauge:gauge@db:5432/gauge
+      SEED_COUNT: "2000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  gauge_pg:

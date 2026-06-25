@@ -1,0 +1,51 @@
+# Render Blueprint: deploys the API (Docker) + a Postgres DB + the static
+# frontend in one go. `render blueprint launch` or connect the repo in the
+# Render dashboard. Free tier is sufficient for the demo.
+
+databases:
+  - name: gauge-db
+    plan: free
+    databaseName: gauge
+    user: gauge
+
+services:
+  # --- Django REST API ---
+  - type: web
+    name: gauge-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    healthCheckPath: /healthz
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: gauge-db
+          property: connectionString
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_ALLOWED_HOSTS
+        value: ".onrender.com"
+      # Set to the deployed frontend origin so CORS is scoped, not open.
+      - key: DJANGO_CORS_ALLOWED_ORIGINS
+        value: "https://gauge-web.onrender.com"
+      - key: SEED_COUNT
+        value: "2000"
+
+  # --- React/Vite static site ---
+  - type: web
+    name: gauge-web
+    runtime: static
+    buildCommand: cd frontend && npm ci && npm run build
+    staticPublishPath: ./frontend/dist
+    envVars:
+      # Point the built bundle at the API origin.
+      - key: VITE_API_BASE
+        value: "https://gauge-api.onrender.com"
+    routes:
+      # SPA fallback so client routes resolve to index.html.
+      - type: rewrite
+        source: /*
+        destination: /index.html
